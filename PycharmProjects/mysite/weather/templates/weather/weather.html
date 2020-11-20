@@ -1,0 +1,38 @@
+{% extends 'weather/base.html' %}
+
+{% block title %}Главная страница{% endblock %}
+
+
+{% block content %}
+<main role="main" class="inner cover">
+    <h1 class="cover-heading">Погода в городах мира.</h1>
+    <div class="input-group">
+            <div class="input-group-prepend"></div>
+        <div>
+            <form method="post">
+                {% csrf_token %}
+                {{ form.city_name }}
+                <button type="submit" class="btn btn-success">Узнать</button>
+            </form>
+        </div>
+    </div>
+  </main>
+  {% if cod %}
+  <div class="alert alert-success mt-2" style="width:500px">
+    <div class="col-5 offset-1">
+        <h1>Информация</h1>
+        <div class="row">
+          <div calass="col-9">
+            <b>Город:</b>{{ info.city }}<br>
+            <b>Температура:</b>{{ info.temp }}<sup>o</sup>
+          </div>
+          <div class="col-2 offset-1">
+              <img src="https://openweathermap.org/img/w/{{info.icon}}.png" alt="фото погоды">
+          </div>
+        </div>
+    </div>
+  </div>
+  {% else %}
+    <p>Неправильное название города</p>
+  {% endif %}
+{% endblock %}

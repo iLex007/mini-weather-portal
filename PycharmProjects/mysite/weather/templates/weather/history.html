@@ -1,0 +1,56 @@
+{% extends 'weather/base.html' %}
+
+{% block title %}
+{{ title }}
+{% endblock %}
+
+{% block content %}
+    <h1>История запросов</h1>
+    <div class="inner">
+      <nav class="nav nav-masthead justify-content-center">
+          <form method="post">
+          {% csrf_token %}
+          {{ form.city }}
+          {{ form.date_from }}
+          {{ form.date_to }}
+              <button type="submit" class="btn btn-success" style="height=10px">Показать</button>
+          </form>
+      </nav>
+    </div>
+<h1></h1>
+    {% if cod %}
+        <p>Некоректный ввод</p>
+    {% endif %}
+    {% if hist %}
+        {% for el in page_obj  %}
+            <div class="alert alert-success " style="width:500px">
+                <div calass="col-9">
+            <b>Город: </b>{{ el.city_name }}<br>
+            <b>Температура: </b>{{ el.temp }}<sup>o</sup>
+                    <p>Время запроса: </p>{{ el.date }}<br>
+                    <p>Описание: </p>{{ el.description }}<br>
+          </div>
+          <div class="col-2 offset-1">
+              <img src="https://openweathermap.org/img/w/{{el.icon}}.png" alt="фото погоды">
+          </div>
+            </div>
+        {% endfor %}
+    <div class="pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?page1">&laquo; first</a>
+                <a href="?page={{ page_obj.previous_page_number}}">previous</a>
+            {% endif %}
+            <span class="current">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+            </span>
+            {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+    {% else %}
+        <p>Тут таких нет</p>
+    {% endif %}
+{% endblock %}
