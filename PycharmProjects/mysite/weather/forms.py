@@ -3,11 +3,10 @@ from django.forms import ModelForm, TextInput, DateTimeInput
 from django_select2 import forms as s2forms
 
 
-
 class CityReqForm(ModelForm):
     class Meta:
-        model = CityWeather
-        fields = ['city_name']
+        model = City
+        fields = ['city']
         widgets = {
             'city_name': TextInput(attrs={
                 'class': 'for-control',
