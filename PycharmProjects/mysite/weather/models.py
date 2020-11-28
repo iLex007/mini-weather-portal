@@ -4,7 +4,7 @@ from datetime import datetime
 
 
 class City(models.Model):
-    city = models.CharField(max_length=20)
+    city = models.CharField(max_length=20, primary_key=True)
 
     def __str__(self):
         return self.city
@@ -12,14 +12,14 @@ class City(models.Model):
 
 class CityWeather(models.Model):
     city_name = models.ForeignKey(City, on_delete=models.CASCADE)
-    date = models.DateTimeField('date requested', default=timezone.now())
     temp = models.FloatField(default=0)
+    date = models.DateTimeField('date requested', default=timezone.now())
     description = models.CharField(max_length=200, default='')
     icon = models.CharField(max_length=10, default='')
     cod = models.IntegerField(default=0)
 
     def __str__(self):
-        return self.city_name
+        return self.city_name.city
 
 
 class HistoryReq(models.Model):

@@ -8,7 +8,7 @@ class CityReqForm(ModelForm):
         model = City
         fields = ['city']
         widgets = {
-            'city_name': TextInput(attrs={
+                'city_name': TextInput(attrs={
                 'class': 'for-control',
                 'placeholder': "Введите название города",
                 'style': "width: 250px;"
@@ -42,11 +42,3 @@ class HistoryReqForm(ModelForm):
 class CityWidget(s2forms.ModelSelect2Widget):
     search_fields = ['city_name']
 
-
-class CityForm(ModelForm):
-    class Meta:
-        model = CityWeather
-        fields = ['city_name']
-        widgets = {
-            'city_name': CityWidget
-        }
